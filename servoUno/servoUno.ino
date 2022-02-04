@@ -17,7 +17,16 @@ bool noAC = true;
 
 void inicializacion();
 bool aperturaCierre(int inicio, int fin, bool modo);
-
+void blinkled(){
+  digitalWrite(pinLedAzul,LOW);
+  delay(50);
+  digitalWrite(pinLedAzul,HIGH);
+  delay(50);
+  digitalWrite(pinLedAzul,LOW);
+  delay(50);
+  digitalWrite(pinLedAzul,HIGH);
+  delay(50);
+  }
 void setup() {
   pinMode(pinDetectorTapadera, INPUT);
   pinMode(pinDetectorLleno, INPUT);
@@ -45,19 +54,20 @@ void loop() {
           estadoAC = true;
           noAC=false;
           digitalWrite(pinLedAzul, HIGH);
-          aperturaCierre(180,80,true);
-        }else if(80<vel<180 && estadoAC!=true){
+          aperturaCierre(180,85,true);
+        }else if(85<vel<180 && estadoAC!=true){
           estadoAC=true;
           noAC=false;
           digitalWrite(pinLedAzul, HIGH);
-          aperturaCierre(vel,80,true);
+          aperturaCierre(vel,85,true);
           }
         delay(3000);        
+        blinkled();
       }
         
     if (estadoAC != false) {
       estadoAC = false;
-      if(aperturaCierre(80,180,false)!=false){
+      if(aperturaCierre(85,180,false)!=false){
           noAC=true;
           digitalWrite(pinLedAzul, LOW);
         }
@@ -69,7 +79,7 @@ bool aperturaCierre(int inicio, int fin, bool modo) { //Funcion para abrir y cer
   if (modo == true) {
     for (vel = inicio; vel > fin; vel--) { //apertura
       servo.write(vel);
-      delay(20);
+      delay(15);
     }
     return true;
   }
@@ -79,7 +89,7 @@ bool aperturaCierre(int inicio, int fin, bool modo) { //Funcion para abrir y cer
       if(digitalRead(pinDetectorTapadera)==LOW){
         return false;
         }
-      delay(20);
+      delay(15);
     }
     return true;
   }
